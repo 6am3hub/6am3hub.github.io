@@ -1,0 +1,591 @@
+
+<!--////////////////////////////////////////////////////////////////////////////////////////
+///                                                                                      ///
+///  Developer Interactive UIUX  2021-2024                                               ///
+///  Contact Shane Brumback https://www.shanebrumback.com                                ///
+///  Message me for questions about this project                                         ///
+///  I am developing this Open World Multi-player AI Concept using                       ///
+///  Three.js and AWS Web Services Serverless Technologies                               ///
+///                                                                                      ///
+///                                                                                      ///
+////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta property="og:image" content="https://www.shanebrumback.com/images/shane-brumback-zombie-attack-chatgpt-game-002.jpg">
+    <meta property="og:url" content="https://www.shanebrumback.com/threejs-zombie-attack-3d-fps-game.html">
+    <meta name="robots" content="index, follow">
+    <title>Three.js Zombie Attack 3D Shooter Game | www.shanebrumback.com</title>
+    <meta name="description" content="Play as a survivor in a village under attack by Zombies in this immersive Three.js and AI experiment written in JavaScript and HTML">
+    <meta name="keywords" content="three.js, Open AI, webgl, 3D Web, Three.js Library, chatgpt, openAI, JavaScript, HTML, game, Minecraft, zombies, survival">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/87e4b512a0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Notable&display=swap" rel="stylesheet">
+
+    <!--Styles-->
+    <link rel="stylesheet" href="../css/app.css?&v=051024">
+
+    <!--Favicon and Mobile Device Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="manifest" href="../images/site.webmanifest">
+    <link rel="mask-icon" href="../images/safari-pinned-tab.svg" color="#5bbad5">
+
+    <!--Font resources-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-mutate-approach="sync"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-19655209-8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-19655209-8');
+    </script>
+
+
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "BlogPosting",
+          "mainEntityOfPage": {
+            "@type": "VideoGame",
+            "@id": "https://www.shanebrumback.com/threejs-zombie-attack-3d-fps-game.html"
+          },
+          "headline": "Three.js Zombie Attack 3D Shooter Game | www.shanebrumback.com",
+          "description": "Play as a survivor in a village under attack by Zombies in this immersive Three.js and AI experiment written in JavaScript and HTML.",
+          "author": {
+            "@type": "Person",
+            "name": "Shane Brumback"
+          },
+          "datePublished": "2023-06-11",
+          "dateModified": "2023-06-11",
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://www.shanebrumback.com/images/shane-brumback-zombie-attack-chatgpt-game-002.jpg",
+            "width": 800,
+            "height": 533
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Shane Brumback",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.shanebrumback.com/images/logo.png",
+              "width": 600,
+              "height": 60
+            }
+          },
+          "keywords": "minecraft game, zombie game, fps, shooter game, three.js, Open AI, webgl, 3D Web, Three.js Library, chatgpt, openAI, JavaScript, HTML, game, Minecraft, zombies, survival"
+        }
+    </script>
+
+
+
+</head>
+
+<body>
+
+    <center>
+        <div id="game-over" style="display: none;">
+            <img src='../images/zombie-attack-game-over.png'>
+        </div>
+        <img id="crosshair" src="../images/reticle.png" alt="Crosshair">
+    </center>
+    <div>
+        <div id="divScoreWrapper" style="display: none;">
+            <div id="divZombieCount"></div>
+            <div id="divScore"></div>
+            <div id="divMusic"></div>
+            <div id="divFPS"></div>
+            <br>
+            <div id="divInstructionGamePlayWrapper" style="text-align: left;">
+                <p>PAUSE/MENU 'ESC'<br></p>
+                <p>Fly and Shoot 'H'<br></p>
+                <p>Ground Level 'L'<br></p>
+                <p>Toggle Music 'M'<br></p>
+                <p>Download Music 'G'<br></p>
+                <p>Example Code 'C'<br></p>
+                <p>Subscribe YouTube 'Y'<br></p>
+                <p>Gaming Supplies 'P'<br></p>
+                <p>My Website 'B'<br></p>
+            </div>
+        </div>
+    </div>
+    <div id="blocker">
+
+        <!-- Remove this when import maps will be widely supported -->
+        <script async="" src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "../build/three.module.js",
+                    "three/addons/": "./jsm/"
+                }
+            }
+        </script>
+        <script type="module" src="module/zombie-attack.js"></script>
+    </div>
+
+    <div id="instructions">
+        <div id="stickyTitle">
+            <table id='header-table' style='text-align: center; z-index: 30000'>
+                <tr>
+                    <td id='header-icon-column'>
+                        <div id='mobile-menu-icon-wrapper' style='text-align: center; z-index: 30000'>
+                        </div>
+                    </td>
+                    <td id='header-page-title-column'>
+                        <a id='header-index-link' href="../index.html">
+                            <h1>ZOMBIE ATTACH THREE.JS GAME DEMO FPS SHOOTER</h1>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <div id="buttonContainer">
+            </div>
+
+        </div>
+        <div class="content">
+            <center>
+                <center>
+                    <h2>
+                        Zombie Attack Minecraft Like Three.js Demo 3D Shooter Game
+                    </h2>
+                    <br>
+                    <p>
+                        How Fast Can You Take Out 175 Zombies?
+                    </p>
+                    <center>
+                        <img id="imgPlayNow" alt="Play Game Now" style="box-shadow: none; display: none;" onmouseover="" onmousedown="" src="images/zombie-attack-play-now.png">
+                        <img id="imgLoading" alet="Game Loading" style="box-shadow: none; display: none;" onmouseover="" onmousedown="" src="images/zombie-attack-loading.png">
+                        <img id="imgPCGame" alt="PC Game" style="box-shadow: none; display: none;" onmouseover="" onmousedown="" src="images/zombie-attack-pc-game.png">
+                        <br>
+                    </center>
+                </center>
+
+                <div class="sub-content">
+                    <a href="../contact-me.html">This site contains examples of Three.js 3D FPS games and effects to help demonstrate how Three.js can be used to program interactive apps and games on a website.  Contact me if you would like more information on adding 3D interactive apps to your website.</a>
+                    <div style="padding: 20px; display: flex; justify-content: center; text-align: center;">
+                        <div style="display: flex; flex-direction: row; align-items: center; flex-wrap: wrap;">
+                            <div class="item">
+                                <a style="padding: 10px;" href="/resume/shane-brumback-resume.pdf" target="_blank">
+                                    <i style="padding: 10px;" class="fas fa-download fa-lg"></i>
+                                    <h2>Download Resume</h2>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="../contact-me.html">
+                                    <h2>Contact Me Anytime</h2>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Zombie Attack is a 3D shooter game that is set in a world where zombies have taken over. The game is developed using the Three.js library, a popular JavaScript library for creating 3D graphics and animations. The Three.js library provides a rich and interactive environment for players to explore and battle against zombies. This article will take a closer look at Zombie Attack and what makes it a unique and exciting game experience.</p>
+                    <div class="grid">
+                        <div class="grid-item">
+                            <a href='../blog/3d-model-animation-xbox-controller-viewer.html'>
+                                <img class="highlight-image" style="width: 100%" alt="Three.js XBox 3d Game Character Controller Demo" src="../images/xbox-character-controller-viewer.jpg">
+                                <p>
+                                    XBox 3D Character Controller Viewer
+                                    Three.js, JavaScript, HTML, CSS,
+                                    Gamepad API
+                                </p>
+                            </a>
+                        </div>
+                        <div class="grid-item">
+                            <a href='../threejs-examples/first-person-shooter-game-starter.html'>
+                                <img class="highlight-image" style="width: 100%" alt="Three.js Examples - First Person Shooter Game Starter Example" src="../images/threejs-examples-first-person-shooter-game-starter.jpg">
+                                <p>
+                                    First Person Shooter FPS Game Starter
+                                    Three.js, JavaScript, HTML, CSS,
+                                    AWS Web Services
+                                </p>
+                            </a>
+                        </div>
+                        <div class="grid-item">
+                            <a href='../threejs-examples/interactive-smiley-particle-system.html'>
+                                <img class="highlight-image" style="width: 100%" alt="threejs examples interactive image particle system" src="../images/threejs-examples-interactive-image-particle-system.jpg">
+                                <p>
+                                    Threejs Example Particles with Images Example
+                                    Three.js, JavaScript, HTML, CSS & AWS Web Services
+                                </p>
+                            </a>
+                        </div>
+
+                    </div>
+                    <h2>Development with Three.js</h2>
+                    <p>The development of Zombie Attack using the Three.js library offers numerous benefits for the game's development and player experience. Three.js provides a user-friendly and flexible framework for creating and maintaining 3D graphics, making it possible to create a detailed and immersive world for players to explore. The Three.js library also supports a range of features, such as dynamic animations and interactive environments, that can be used to create a more engaging gaming experience for players.</p>
+                    <center>
+                        <div style="display: flex; justify-content: center; align-items: center; padding: 25px;">
+                            <a target="_blank" href="https://amzn.to/3OQUnmY"> <img style="max-width: 600px;;" alt="sales gaming supplies" src="../images/sales-gaming-supplies.jpg"></a>
+                        </div>
+                    </center>
+
+                    <h2>Zombie Generation with Open AI</h2>
+                    <p>In addition to being developed using the Three.js library, Zombie Attack also utilizes the capabilities of Open AI. Specifically, Chat GPT Open AI is used as a Zombie generating assistant, providing players with an endless stream of zombies to battle against. This is done by training Chat GPT Open AI on a range of information and data, allowing it to generate unique and challenging zombies for players to battle against. This makes each playthrough of Zombie Attack a unique and exciting experience, as players never know what to expect from the zombies they encounter.</p>
+
+                    <h2>Gameplay and Features</h2>
+                    <p>
+                        Zombie Attack is a first-person shooter game that takes
+                        place in a Minecraft-like world. Players control a character
+                        who must battle against zombies and other enemies, using weapons
+                        and other tools to defend themselves. The game features a range
+                        of weapons, from guns and knives to explosives and traps, providing
+                        players with a variety of ways to defend themselves. In addition
+                        to battling against zombies, players can also explore the world and
+                        collect resources, building shelters and fortifications to protect
+                        themselves from the zombie horde.
+                    </p>
+
+                    <p>
+                        The world of Zombie Attack is randomly generated,
+                        meaning that each playthrough of the game is unique.
+                        The use of Chat GPT Open AI as a Zombie generating assistant
+                        also ensures that each playthrough is different, as the zombies
+                        generated by the AI are different each time. The combination of
+                        randomly generated worlds and unique zombies makes Zombie Attack
+                        a game that is highly replayable, providing players with a different
+                        experience each time they play.
+                    </p>
+
+                    <h2>Conclusion</h2>
+                    <p>
+                        Zombie Attack is a Minecraft-like 3D shooter game that is
+                        developed using the Three.js library and assisted by Chat GPT
+                        Open AI as a Zombie generating assistant. The use of Three.js
+                        provides a rich and interactive environment for players to
+                        explore and battle zombies, while the use of Chat GPT Open
+                        AI ensures that each playthrough of the game is unique and exciting.
+                        With its Minecraft-like world, first-person shooter gameplay,
+                        and endless stream of zombies, Zombie Attack is a game that
+                        offers a unique and thrilling gaming experience for players.
+                    </p>
+
+                    <h2>
+                        Shane Brumback.com 3D Interactive: A hub for Three.js
+                        powered 3D Games and Apps
+                    </h2>
+                    <p>
+                        Shane Brumback.com 3D Interactive is a site dedicated
+                        to showcasing the power and capabilities of the Three.js
+                        library in the development of 3D games and apps. Three.js
+                        is a popular JavaScript library for creating 3D graphics and animations in the web browser, and the site features a range of games and applications that have been built using the library.
+                    </p>
+                    <p>
+                        The site offers a wealth of exciting 3D games and apps
+                        that demonstrate the capabilities of Three.js,
+                        from first-person shooters and action games to interactive
+                        experiences and educational applications. Whether you
+                        are a gamer looking for an immersive experience, or a
+                        developer seeking inspiration for your next project,
+                        Shane Brumback.com 3D Interactive is the perfect place
+                        to start.
+                    </p>
+                    <p>
+                        All of the games and apps hosted on Shane Brumback.com
+                        3D Interactive are developed using Three.js, and they
+                        take full advantage of the library's powerful features
+                        and capabilities. From the smooth animations and detailed
+                        graphics, to the intuitive controls and engaging gameplay,
+                        the games and apps hosted on the site are sure to impress
+                        and inspire.
+                    </p>
+                    <p>
+                        Whether you are a seasoned Three.js developer, or just
+                        starting out, Shane Brumback.com 3D Interactive is the
+                        perfect place to explore the possibilities of the library.
+                        The site is constantly being updated with new games and apps,
+                        so be sure to check back often to see what's new.
+                    </p>
+
+                </div>
+
+                <h2>Three.js Programming Books</h2>
+                <div id="threejsads" class="grid"></div>
+                <center>
+                    <h2 id='RecentBlogsTitle' style="text-align: center">Recent Blog Posts & Updates</h2>
+                    <div id="divRecentBlogPosts" class="sub-content"><ul><li><a href="/blog/threejs.html"><i class="fa fa-link"></i>  Date -  <time datetime="03-07-2024">03-07-2024</time> - Threejs</a></li>
+<li><a href="/blog/using-threejs-to-develop-online-3d-browser-games.html"><i class="fa fa-link"></i>  Date -  <time datetime="03-03-2024">03-03-2024</time> - Using Threejs To Develop Online 3D Browser Games</a></li>
+<li><a href="/blog/using-threejs-pointer-lock-controls-for-online-3d-games.html"><i class="fa fa-link"></i>  Date -  <time datetime="03-03-2024">03-03-2024</time> - Using Threejs Pointer Lock Controls For Online 3D Games</a></li>
+<li><a href="/blog/the-advantages-of-creating-3d-Interactive-menus-and-websites-using-threejs.html"><i class="fa fa-link"></i>  Date -  <time datetime="03-03-2024">03-03-2024</time> - The Advantages Of Creating 3D Interactive Menus And Websites Using Threejs</a></li>
+<li><a href="/blog/threejs-examples-exploring-interactive-visual-particle-systems.html"><i class="fa fa-link"></i>  Date -  <time datetime="03-03-2024">03-03-2024</time> - Threejs Examples Exploring Interactive Visual Particle Systems</a></li>
+<li style="padding: 8px;"><a href="../rss-viewer.html"><i class="fa fa-rss"></i> Subscribe To My RSS Feed For Live Updates</a></li><li style="padding: 8px;"><a href="../links.html"><i class="fa fa-link"></i> More Examples and Tutorials</a></li></ul></div>
+                </center>
+                <h2>Three.js Example Code and Projects</h2>
+                <div class="grid">
+                    <div class="grid-item">
+                        <a href='../threejs-examples/first-person-shooter-game-starter.html'>
+                            <img class="highlight-image" style="width: 100%" alt="Three.js Example - First Person Shooter Game Starter Example" src="../images/threejs-examples-first-person-shooter-game-starter.jpg">
+                            <p>
+                                First Person Shooter Game Starter
+                                Three.js, JavaScript, HTML, CSS,
+                                AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../blog/how-to-program-a-3d-menu.html' target="_blank">
+                            <img class="highlight-image" style="width: 100%" alt="Three.js Example - Programming Interactive 3D Menus" src="../images/threejs-examples-programming-interactive-3d-menus.png">
+                            <p>
+                                Programming Interactive 3D Menu
+                                Three.js , JavaScript, HTML, CSS,
+                                AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='https://www.shopthespark.com' target="_blank">
+                            <img class="highlight-image" style="width: 100%" alt="Amazon search engine and shopping portal" src="../images/amazon-shopping-portal.jpg">
+                            <p>
+                                Amazon Search Engine and Shopping Portal Using
+                                Amazon Advertising API, JavaScript, HTML, CSS, Node.js,
+                                AWS Web Services & API Integration
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../spacex-falcon-9-launch-complex.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs game multi-player spacex falcon 9 3d world" src="../images/spacex-3d-falcon-9-launch-pad.jpg">
+                            <p>
+                                Multi-Player Threejs 3D World Educational Interactive SpaceX Falcon 9 Launch
+                                Pad Using JavaScript, HTML, CSS,
+                                AWS Web Services & API Integrations
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/fire-fountain-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="Three.js Example - Fire Fountain Particle System" src="../images/fire-fountain-particle-system.jpg">
+                            <p>
+                                Threejs Example Fire Fountain Particle System,
+                                JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/simple-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="Simple Threejs Particle System Example" src="../images/simple-particle-system.jpg">
+                            <p>
+                                Threejs Simple Particle System Example
+                                Using JavaScript, HTML, CSS, AWS Web Services & API Integrations
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='https://www.shopthespark.com/best-deals-today.html' target="_blank">
+                            <img class="highlight-image" style="width: 100%" alt="3d interactive landing pages" src="../images/3d-interactive-landing-pages.jpg">
+                            <p>
+                                ThreeJS 3D Interactive Landing Pages Using Amazon Advertising API,
+                                JavaScript, HTML, CSS, AWS Web Services & API Integrations
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/rocket-engine-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs rocket engine particle system" src="../images/threejs-particle-system-rocket-engine.jpg">
+                            <p>
+                                Threejs 3D Particle System Example Using
+                                JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='https://www.supersoldierbattle.com' target="_blank">
+                            <img class="highlight-image" style="width: 100%" alt="threejs super soldier robot battle 3d game" src="../images/super-soldier-battl-game-demo.jpg">
+                            <p>
+                                Multi-Player Threejs 3D Robot Battle Action Game Using,
+                                JavaScript, HTML, CSS, Node.js,
+                                AWS Web Services & API Integration
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/water-shader-effects.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples water shader effects" src="../images/threejs-examples-water-shader-effects.jpg">
+                            <p>
+                                Threejs Example Water Shader
+                                JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='videos.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs basketball 3d game" src="../images/metasports-intro.png">
+                            <p>
+                                3D Blockchain Metaverse Basketball / Sports Framework Using Threejs
+                                JavaScript, HTML, CSS, Node.js * AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='threejs-zombie-attack.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs zombie attack minecraft like game" src="../images/shane-brumback-zombie-attack-chatgpt-game-002.jpg">
+                            <p>
+                                3D ( Minecraft Like ) Battle Game Using Threejs
+                                JavaScript, HTML, CSS, Node.js & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='https://www.spacewowgame.com/' target="_blank">
+                            <img class="highlight-image" style="width: 100%" alt="threejs space wow 3d space game" src="../images/space-wow-dogecoin-game-start.jpg">
+                            <p>
+                                3D Dogecoin Space Action Game Using Threejs
+                                JavaScript, HTML, CSS, Node.js & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='post-processing-1-million-polygons-threejs.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs post processing 1 million polygons" src="../images/post-processing-1-million-polygons-threejs-meta.jpg">
+                            <p>
+                                3D Affiliate Landing Page Using Threejs
+                                JavaScript, HTML, CSS, Node.js CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/comet-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs example code comet particle system" src="../images/threejs-example-comet-particle-system.jpg">
+                            <p>
+                                Comet Particle System Using Three.js Framework,
+                                JavaScript, HTML, CSS, Node.js & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/animate-3d-objects-shaders.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples animating 3D objects & fragment shaders" src="../images/threejs-examples-how-to-animate-3d-spheres.jpg">
+                            <p>
+                                Threejs Example 3D Sphere Animation,
+                                JavaScript, HTML, CSS, Node.js & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/interactive-smiley-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples interactive image particle system" src="../images/threejs-examples-interactive-image-particle-system.jpg">
+                            <p>
+                                Threejs Example Particles with Images Example
+                                Three.js, JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/animated-multi-color-cloud-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples animated multi color cloud particle system" src="../images/threejs-examples-multi-color-cloud-particle-system.jpg">
+                            <p>
+                                Multi Color Cloud Particle System
+                                Three.js, JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/animated-white-cloud-particle-system.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples animated white cloud particle system" src="../images/threejs-examples-white-cloud-particle-system.jpg">
+                            <p>
+                                White Cloud Particle System
+                                Three.js, JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='../threejs-examples/adding-transparent-png-textures-to-3d-objects.html'>
+                            <img class="highlight-image" style="width: 100%" alt="threejs examples adding transparent png images to a 3d cube" src="../images/threejs-examples-adding-transparent-png-textures-to-3d-objects.jpg">
+                            <p>
+                                Adding Transparent PNG Images To A 3D Cube
+                                Three.js, JavaScript, HTML, CSS & AWS Web Services
+                            </p>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a href='https://www.dualairfryers.com'>
+                            <img class="highlight-image" style="width: 100%" alt="Dual Air Fryers.com Shopping Portal Popular Air Fryers" src="../images/dual-air-fryers-shopping-portal.jpg">
+                            <p>
+                                Amazon Product Searcher and Shopping Portal for Popular Air Fryers
+                                Three.js, JavaScript, HTML, CSS, Node.js, AWS Web Services and API Integration
+                            </p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <center>
+
+                        <div class="sub-content">
+                            <center><h2>Benefits of Threejs</h2></center>
+                            <ul style="padding-right: 15px;">
+                                <li>Immersive User Experience: By incorporating Three.js and 3D interactive apps, websites can provide a more immersive and engaging user experience.</li>
+                                <li>Product Visualization: Three.js allows for the creation of realistic 3D product visualizations, enabling customers to view products from different angles and make informed purchasing decisions.</li>
+                                <li>Architectural Visualization: With Three.js, architects and designers can showcase their projects in a virtual 3D environment, providing clients with a realistic preview of the final design.</li>
+                                <li>Educational and Training Applications: Three.js and 3D interactive apps can be used in educational websites to create interactive simulations, virtual laboratories, and training modules for enhanced learning experiences.</li>
+                                <li>Data Visualization: Three.js enables the visualization of complex data sets in a visually appealing and interactive manner, making it easier to analyze and understand large amounts of information.</li>
+                            </ul>
+                            <center>
+                                <a href="/blog/aws-github-integration.html">
+                                    <h2>Enhancing Development with AWS and GitHub Integration</h2>
+                                </a>
+                                <p>
+                                    As a developer, I rely on the powerful integration between Amazon Web Services (AWS) and GitHub to streamline my development process. The seamless collaboration, automated workflows, and scalable infrastructure provided by AWS and GitHub allow me to focus on building high-quality applications.
+                                    <a href="/blog/aws-github-integration.html">Read more</a>
+                                    about how this integration enhances my productivity and enables efficient code management.
+                                </p>
+                                <center><h2>I am Very Passionate About My Work</h2></center>
+                                I will integrate 3D interactive graphics into your
+                                website to enhance user interaction and boost engagement.
+                                By adding 3D elements, such as interactive backgrounds
+                                and scenes, we can create a captivating visual experience
+                                that will leave a lasting impression on your visitors.
+                                With 3D interactive graphics, your website can come to life,
+                                allowing users to explore and interact with virtual environments
+                                in real-time. Imagine a dynamic background that reacts to
+                                user actions, offering an engaging and immersive journey.
+                                Whether it's a rotating 3D object, a mesmerizing particle
+                                system, or a scene that responds to mouse movements, these
+                                interactive elements will captivate your audience and encourage
+                                them to stay longer on your site.  Not only do 3D interactive
+                                graphics provide a visually stunning experience, but they also
+                                offer practical benefits. They can be used to showcase products
+                                or services in a more engaging way, allowing users to interact
+                                with virtual representations and experience them from different
+                                angles. This can greatly enhance product understanding and increase
+                                the chances of conversions.
+
+                            </center>
+
+                        </div>
+                    </center>
+                </div>
+            </center>
+        </div>
+
+        <div id="footerContentDiv"></div>
+
+    </div>
+
+
+    <!-- Include the JavaScript file -->
+    <script src="../js/load-footer-markup.js"></script>
+    <script src="../js/create-navigation-buttons.js" defer=""></script>
+    <script src="../js/blog-scripts.js?&v=051024"></script>
+    <script src="../js/gridGenerator.js"></script>
+    <script src="../js/gameTimer.js"></script>
+    <script src="../js/loadShotGunShellImaages.js"></script>
+    <script src="../js/email-subscribe.js"></script>
+
+
+</body>
+</html>
