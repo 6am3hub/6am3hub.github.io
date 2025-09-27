@@ -1,0 +1,168 @@
+<style>
+
+    .grid-container-footer {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .grid-item-footer {
+        background-color: rgba(0, 0, 128, 0.5); /* Navy with 50% transparency */
+        padding: 20px;
+        color: white;
+        text-align: center;
+    }
+
+    #footer-tools {
+        text-align: center;
+    }
+
+    #nav-icons-header {
+        display: flex;
+        justify-content: center;
+    }
+
+        #nav-icons-header p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        #nav-icons-header a {
+            display: block; /* Make the entire icon clickable */
+            text-align: center;
+            padding: 8px;
+            color: white;
+        }
+
+    @media screen and (max-width: 768px) {
+        #footer-tools {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #nav-icons-header {
+            flex-direction: row;
+        }
+
+        #scrollToTopIcon, #scrollToTopContainer {
+            display: none;
+            max-height: 0; /* Set max-height to 0 to hide the element */
+            padding: 0; /* Optionally set padding to 0 */
+            margin: 0; /* Optionally set margin to 0 */
+        }
+    }
+</style>
+
+<div id="div-main-footer-links-wrapper">
+    <div id="appFooter">
+        <br />
+        <div class="grid-container-footer">
+            <div class="grid-item-footer">
+                <h2 id="contactMe">Contact Me</h2><br />
+                <div class="item"><a style="padding: 10px;" href="tel:+1312-668-7221">312-668-7221</a><br /></div>
+                <div class="item"><a style="padding: 10px;" href="mailto:shane.brumback@gmail.com">shane.brumback@gmail.com</a><br /></div>
+                <div class="item"><a style="padding: 10px;" href="../resume/shane-brumback-resume.pdf" target="_blank"><i style="padding: 10px;" class="fas fa-download fa-lg"></i><h2>Download Resume</h2></a></div>
+                <a href='../contact-me.html'><h2 id="contactMe"><i class="fas fa-comment fa-lg" style="color: white; padding: 10px;"></i>Send Message</h2><br /></a>
+            </div>
+        </div>
+        <br />
+        <div class="grid-container-footer">
+            <div class="grid-item-footer">
+                <div style="z-index: 100">
+                    <h2>SHARE MY SITE</h2><br />
+                    <a href="http://www.reddit.com/submit?url=https://www.shanebrumback.com">
+                        <i class="fab fa-reddit-alien fa-lg" style="color: white; padding: 10px; font-size: 30px;"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=3D Interactive Games and Apps https://www.shanebrumback.com">
+                        <i class="fab fa-twitter fa-lg" style="color: white; padding: 10px; font-size: 30px;"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.shanebrumback.com">
+                        <i class="fab fa-facebook-square fa-lg" style="color: white; padding: 10px; font-size: 30px;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.shanebrumback.com">
+                        <i class="fab fa-linkedin fa-lg" style="color: white; padding: 10px; font-size: 30px;"></i>
+                    </a>
+                    <a href="https://www.twitch.tv/YOUR_CHANNEL">
+                        <i class="fab fa-twitch fa-lg" style="color: white; padding: 10px; font-size: 30px;"></i>
+                    </a>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="grid-item-footer">
+                <h2>My GitHub Gists</h2>
+                <div class="item"><a href="https://gist.github.com/ShaneBrumback" target="_blank"><i class="fas fa-link"></i>Public Gists List</a></div>
+            </div>
+            <div class="grid-item-footer">
+                <h2>Subscribe to RSS Feeds</h2>
+                <div class="item"><a style="padding: 10px;" href="../feed.xml"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>Shane Brumback Raw RSS Content Feed</a></div>
+                <div class="item"><a style="padding: 10px;" href="../rss-viewer.html"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>RSS Feed Previewer</a></div>
+                <div class="item"><a style="padding: 10px;" href="../sitemap.xml"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>Sitemap</a></div>
+                <div class="item"><a style="padding: 10px;" href="https://www.shopthespark.com/feed.xml"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>ShopTheSpark.com Product Sales Raw RSS Content Feed</a></div>
+                <div class="item"><a style="padding: 10px;" href="https://www.shopthespark.com/rss-viewer.html"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>Product Sales RSS Feed Previewer</a></div>
+                <div class="item"><a style="padding: 10px;" href="https://www.dualairfryers.com/feed.xml"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>DualAirFryers.com Product Sales Raw RSS Content Feed</a></div>
+                <div class="item"><a style="padding: 10px;" href="https://www.dualairfryers.com/rss-viewer.html"><i style='padding: 5px;' class="fas fa-external-link-alt"></i>Product Sales RSS Feed Previewer</a></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <br />
+    <div class="grid-container-footer">
+        <div class="grid-item-footer">
+            <h2>Resources</h2>
+            <ul style="list-style-type: none;">
+                <li><div class="item"><a style="padding: 10px;" href="https://github.com/mrdoob/three.js.git" target="_blank">Three.js Library</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://discourse.threejs.org/" target="_blank">Three.js Forum</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://sketchfab.com/" target="_blank">SketchFab 3D Models</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.blender.org/" target="_blank">Blender</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://artlist.io/artlist-70446/?artlist_aid=shanebrumback_1992&utm_source=affiliate_p&utm_medium=shanebrumback_1992&utm_campaign=shanebrumback_1992" target="_blank">Artlist.io</a></div></li>
+            </ul>
+        </div>
+        <div class="grid-item-footer">
+            <h2 id="footerInternalLinks">Internal Links</h2>
+            <ul style="list-style-type: none;">
+                <li><div class="item"><a style="padding: 10px;" href="../index.html">Home</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="../projects.html">Recent Projects</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="../about-me.html">About Me</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="../contact-me.html">Contact Me</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="../videos.html">Videos</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="../links.html">Site Links</a></div></li>
+            </ul>
+        </div>
+        <div class="grid-item-footer">
+            <h2>Recent Projects</h2>
+            <ul style="list-style-type: none;">
+                <li><div class="item"><a style="padding: 10px;" href="https://www.shopthespark.com" target="_blank">ShopTheSpark.com</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.dualairfryers.com" target="_blank">DualAirFryers.com</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.spacewowgame.com" target="_blank">SpaceWowGame.com</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://shanebrumback.blogspot.com/" target="_blank">My Tech Blog</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://trendingtop10sellers.blogspot.com/" target="_blank">Trending Top 10 Blog</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.youtube.com/channel/UC5kqNYlnPWrL46eTKjTEPHg" target="_blank">My YouTube Channel</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.youtube.com/channel/UCZFli7epnBtP2pcdsVs3gvg" target="_blank">Relaxing Music YouTube Channel</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.supersoldierbattle.com" target="_blank">SuperSoldierBattle.com</a></div></li>
+                <li><div class="item"><a style="padding: 10px;" href="https://www.womenslongsleevetops.com" target="_blank">Women''s Long Sleeve Tops.com</a></div></li>
+            </ul>
+        </div>
+    </div>
+
+    <center id="divToTopIcon"><h2><i id="footerScrollUpArrowIcon" onclick="scrollToTop()" class="fas fa-arrow-up"></i></h2></center>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="footer-links-bottom-spacer">
+    </div>
+</div>
+<div id="footer-tools" >
+    <center id="sliderContainer" style='padding-bottom: 10px;'>
+        <div class="slider">
+            <div class="slider-button" id="sliderButton"></div>
+        </div>
+    </center>
+   
+</div>
+<p id="scrollToContactMe">
+</p>
+
